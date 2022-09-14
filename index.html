@@ -5,8 +5,9 @@
 
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Special+Elite">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono">
+
         <link rel="stylesheet" href="style.css">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,9 @@
     </head>
     <body>
 
-        <img id = "main_heading" src = "title.png" />
+        <h1 id = "main_heading" >The Eza Expo</h1>
+
+        <p><i>A collection of things that share the distiction of being made by me.</i></p>
 
         <div id = "navbar">
         <hr>
@@ -31,14 +34,23 @@
         <hr>
         </div>
 
-        <p><i>A collection of things that share the distiction of being made by me.</i></p>
+        <h2>Shaders</h2>
 
-        <h2>Projects</h2>
+        <ul>
+            <li><a href = "/shader?name=earth">earth</a></li>
+            <li><a href = "/shader?name=lava">lava</a></li>
+            <li><a href = "/shader?name=eclipse">eclipse</a></li>
+        </ul>
 
-        <a href = "/lava">lava</a>
-
-        <p style="color: red;"><b>This website isn't finished, I'm not sure how you found it but check back later!</b></p>
+        <div id = "show_place"></span>
 
         <br><br><br><br>
     </body>
 </html>
+
+<script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const thing = urlParams.get('a');
+    document.getElementById("show_place").innerHTML = thing;
+</script>
