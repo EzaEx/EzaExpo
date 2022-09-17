@@ -1,5 +1,5 @@
-const logicWidth = 1000;
-const logicHeight = 1000;
+const logicWidth = 350;
+const logicHeight = 350;
 
 
 const app = new PIXI.Application({
@@ -12,7 +12,7 @@ antialias: true
 document.querySelector('#shader_frame').appendChild(app.view);
 
 
-const rect = new PIXI.Graphics().beginFill(0xaaaaaa).drawRect(0, 0, logicWidth, logicHeight);
+const rect = new PIXI.Graphics().beginFill(0x000000).drawRect(0, 0, logicWidth, logicHeight);
 app.stage.addChild(rect);
 
 
@@ -41,6 +41,9 @@ function onLoaded(loader,res) {
     app.ticker.add((delta) => {
         filter.uniforms.time += 0.02 * delta;
     });
+
+    var blurer = new PIXI.filters.BlurFilter();
+    blurer.blur = .0;
 
 
     rect.filters = [filter];

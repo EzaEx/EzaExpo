@@ -6,6 +6,8 @@ body {
     font-family: 'Roboto Mono', monospace;
     font-size: 1em;
     font-weight: 500;
+    background-color: black;
+    color: white;
 }
 
 #main_heading {
@@ -30,7 +32,7 @@ body {
 }
 
 a {
-    color: black;
+    color: inherit;
 }
 a:hover {
     color: #aaaaaa;
@@ -38,7 +40,7 @@ a:hover {
 
 hr {
     font-family: sans-serif;
-    color: black;
+    color: inherit;
     border: 0.1rem solid;
 }
 
@@ -55,4 +57,5 @@ hr {
     bottom: 0;
     text-align: center;
     width: min(70vw, 70vh);
+    image-rendering:auto;
 }
