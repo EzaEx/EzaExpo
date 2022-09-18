@@ -1,5 +1,5 @@
-const logicWidth = 350;
-const logicHeight = 350;
+const logicWidth = 800;
+const logicHeight = 800;
 
 
 const app = new PIXI.Application({

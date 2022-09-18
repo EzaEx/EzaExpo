@@ -125,7 +125,7 @@ void main()
 
     float clouds = (cloud_1 +cloud_2) * 2.;
 
-    gl_FragColor = vec4(mix(gl_FragColor.rgb, vec3(clouds), 0.5), 1.);
+    //gl_FragColor = vec4(mix(gl_FragColor.rgb, vec3(clouds), 0.5), 1.);
 
     //add lighting
     float light_val = smoothstep(.6, 0., uv.x);
