@@ -51,12 +51,28 @@ float fbm(vec2 x) {
 //END 2D NOISE-FUNCTIONS -------------------
 
 
+vec2 fisheye_distort(vec2 uv) {
+    //FROM: https://www.shadertoy.com/view/ll2GWV
+
+    float d=length(uv);
+    float z = sqrt(1.0 - d * d);
+    float r = atan(d, z) / 3.14159;
+    float phi = atan(uv.y, uv.x);
+    uv = vec2(r*cos(phi)+.5,r*sin(phi)+.5);
+    
+    //scale fish-eye to -1 -> 1 coords
+    uv = uv * 2. -1.;
+
+    return uv;
+}
+
+
 uniform float time;
 uniform vec2 dims;
 
 
-float altitude_scale = 4.;
-vec2 altitude_offset = vec2(-5.);
+float altitude_scale = 5.;
+vec2 altitude_offset = vec2(-10.);
 vec3 altitude_col = vec3(0, .5, 0);
 
 float terrain_scale = 3.;
@@ -70,12 +86,28 @@ float sea_level = .5;
 vec3 marine_col = vec3(.1, .1, .5);
 vec3 artic_col = vec3(.9, .9, .9);
 
+float roll_angle = .4;
+
+float time_scale = 0.1;
+
 void main()
 {
 
     vec2 uv = (gl_FragCoord.xy * 2.0 - dims.xy) / dims.xy;
+    
+    float s=sin(roll_angle), c=cos(roll_angle);
+    mat2 mat = mat2( c, -s, s, c );
+    uv *= mat;
 
-    uv.x += time / 3.;
+    uv *= 1.2;
+
+    vec2 uvc = uv + vec2(0);
+
+    uv = fisheye_distort(uv);
+
+    vec2 uvtc = uv + vec2(0);
+
+    uv += vec2(time * time_scale, 0.);
 
     vec2 altitude_uv = (uv + altitude_offset) * altitude_scale;
     vec2 terrain_uv = (uv + terrain_offset) * terrain_scale;
@@ -88,20 +120,26 @@ void main()
 
     vec3 sea_col = (1. - altitude / (sea_level * 1.7)) * marine_col;
 
+    sea_level += pow(uv.y, 2.) / 4.;
+
     float is_land = step(sea_level, altitude);
     
     vec3 col = land_col * is_land +
                 sea_col * (1. - is_land);
 
     
-    vec2 polar_uv = (uv + polar_offset) *3.;
 
-    float is_polar = step(1. - pow(uv.y, 4.), terrain);
-
+    float is_polar = step(1. - pow(abs(uv.y), 2.), terrain);
     float polar = pow(altitude, .5); 
     
+
     col = is_polar * artic_col * polar + 
             (1. - is_polar) * col;
+
+    float is_circle = step(length(uvc), 1.);
+    col *= is_circle;
+
+    col *= smoothstep(.7, .1, uvtc.x);
 
     gl_FragColor = vec4(col, 1.);
 }
