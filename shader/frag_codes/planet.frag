@@ -71,7 +71,7 @@ uniform float time;
 uniform vec2 dims;
 
 
-float altitude_scale = 5.;
+float altitude_scale = 4.;
 vec2 altitude_offset = vec2(-10.);
 vec3 altitude_col = vec3(0, .5, 0);
 
@@ -83,35 +83,53 @@ vec2 polar_offset = vec2(0., 10.);
 
 float sea_level = .5;
 
-vec3 marine_col = vec3(.1, .1, .5);
-vec3 artic_col = vec3(.9, .9, .9);
+vec3 marine_col = vec3(.2, .1, .6);
+vec3 artic_col = vec3(.7, .7, .7);
+vec3 cloud_col = vec3(.8, .8, .8);
+
+vec2 cloud_offset1 = vec2(50.);
+vec2 cloud_offset2 = vec2(55.);
+
+float cloud_layer_diff = -0.6;
 
 float roll_angle = .4;
 
-float time_scale = 0.1;
+float time_scale = 0.07;
 
 void main()
 {
+    //calc rate for use in movement
+    float rate = time * time_scale;
 
     vec2 uv = (gl_FragCoord.xy * 2.0 - dims.xy) / dims.xy;
     
+    
+    //rotate uv by angle
     float s=sin(roll_angle), c=cos(roll_angle);
     mat2 mat = mat2( c, -s, s, c );
     uv *= mat;
 
+    //scale uv
     uv *= 1.2;
 
+    //hold pre-distorted uv
     vec2 uvc = uv + vec2(0);
 
     uv = fisheye_distort(uv);
 
+    //hold stationary distorted uv
     vec2 uvtc = uv + vec2(0);
 
-    uv += vec2(time * time_scale, 0.);
+    //translate uv
+    uv += vec2(rate, 0.);
 
+    //calc uvs to generate terrain maps
     vec2 altitude_uv = (uv + altitude_offset) * altitude_scale;
     vec2 terrain_uv = (uv + terrain_offset) * terrain_scale;
     
+    //-----------------------------------------------------//
+    
+    //land values
     float altitude = fbm(altitude_uv);
     float terrain = fbm(terrain_uv);
 
@@ -120,26 +138,52 @@ void main()
 
     vec3 sea_col = (1. - altitude / (sea_level * 1.7)) * marine_col;
 
+   
+    //change sea level based on altitude
     sea_level += pow(uv.y, 2.) / 4.;
 
     float is_land = step(sea_level, altitude);
     
     vec3 col = land_col * is_land +
                 sea_col * (1. - is_land);
-
     
+    //-----------------------------------------------------//
 
+    //generate icecaps
     float is_polar = step(1. - pow(abs(uv.y), 2.), terrain);
     float polar = pow(altitude, .5); 
     
-
+    //add icecaps
     col = is_polar * artic_col * polar + 
             (1. - is_polar) * col;
 
-    float is_circle = step(length(uvc), 1.);
+    //-----------------------------------------------------//
+
+    //generate cloud maps
+    vec2 cloud_uv1 = uv + cloud_offset1 + vec2(rate, 0);
+    vec2 cloud_uv2 = uv + cloud_offset2 + vec2(rate * cloud_layer_diff, 0);
+    cloud_uv1 *= 10.;
+    cloud_uv1.x /= 3.;
+    cloud_uv2 *= 10.;
+    cloud_uv2.x /= 2.;
+    float cloud = fbm(cloud_uv1);
+    float cloud2 = fbm(cloud_uv2);
+
+    //combine cloud maps
+    vec3 c_col = cloud * cloud2 * cloud_col;
+
+    //add clouds
+    col = mix(col, c_col, .5);
+    col *= 1.5;
+
+    //-----------------------------------------------------//
+
+    //cut out earth circle
+    float is_circle = smoothstep(1., .995, length(uvc));
     col *= is_circle;
 
-    col *= smoothstep(.7, .1, uvtc.x);
+    //light earth
+    col *= smoothstep(.8, .1, uvtc.x);
 
     gl_FragColor = vec4(col, 1.);
 }
