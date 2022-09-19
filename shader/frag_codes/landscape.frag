@@ -51,33 +51,57 @@ float fbm(vec2 x) {
 //END 2D NOISE-FUNCTIONS -------------------
 
 
-
 uniform float time;
 uniform vec2 dims;
 
-vec2 noise_offset = vec2(-5.);
-float noise_scale = 3.;
 
-float terrain_scale = 2.;
+float altitude_scale = 4.;
+vec2 altitude_offset = vec2(-5.);
+vec3 altitude_col = vec3(0, .5, 0);
+
+float terrain_scale = 3.;
 vec2 terrain_offset = vec2(5.);
+vec3 terrain_col = vec3(.5, 0, 0);
+
+vec2 polar_offset = vec2(0., 10.);
 
 float sea_level = .5;
 
+vec3 marine_col = vec3(.1, .1, .5);
+vec3 artic_col = vec3(.9, .9, .9);
+
 void main()
 {
+
     vec2 uv = (gl_FragCoord.xy * 2.0 - dims.xy) / dims.xy;
-    
-    vec2 altitude_uv = (uv + noise_offset) * noise_scale;
+
+    uv.x += time / 3.;
+
+    vec2 altitude_uv = (uv + altitude_offset) * altitude_scale;
     vec2 terrain_uv = (uv + terrain_offset) * terrain_scale;
     
     float altitude = fbm(altitude_uv);
     float terrain = fbm(terrain_uv);
 
-    vec3 col = altitude * vec3(.1, .8, .1);
-    col += terrain * vec3(.7, .1, .1);
+    vec3 land_col = altitude * altitude_col;
+    land_col += terrain * terrain_col;
 
-    float is_ground = step(sea_level, altitude);
-    col *= is_ground;
+    vec3 sea_col = (1. - altitude / (sea_level * 1.7)) * marine_col;
+
+    float is_land = step(sea_level, altitude);
+    
+    vec3 col = land_col * is_land +
+                sea_col * (1. - is_land);
+
+    
+    vec2 polar_uv = (uv + polar_offset) *3.;
+
+    float is_polar = step(1. - pow(uv.y, 4.), terrain);
+
+    float polar = pow(altitude, .5); 
+    
+    col = is_polar * artic_col * polar + 
+            (1. - is_polar) * col;
 
     gl_FragColor = vec4(col, 1.);
 }

@@ -84,12 +84,12 @@ void main()
     float z = sqrt(1.0 - d * d);
     float r = atan(d, z) / 3.14159;
     float phi = atan(uv.y, uv.x);
-    uv = vec2(r*cos(phi)+.5,r*sin(phi)+.5);
+    //uv = vec2(r*cos(phi)+.5,r*sin(phi)+.5);
     /////////////////////////
 
 
     //scale fish-eye to -1 -> 1 coords
-    uv = uv * 2. -1.;
+    //uv = uv * 2. -1.;
 
     //get noise val at point & rotate earth
     float val = fbm(uv * 5. + vec2(time * TIME_SCALE, 0.));
@@ -125,7 +125,7 @@ void main()
 
     float clouds = (cloud_1 +cloud_2) * 2.;
 
-    gl_FragColor = vec4(mix(gl_FragColor.rgb, vec3(clouds), 0.5), 1.);
+    //gl_FragColor = vec4(mix(gl_FragColor.rgb, vec3(clouds), 0.5), 1.);
 
     //add lighting
     float light_val = smoothstep(.6, 0., uv.x);
@@ -134,6 +134,6 @@ void main()
     gl_FragColor *= vec4(vec3(light_val), 1.);
     
     //cut-out earth circle
-    gl_FragColor *= smoothstep(0., 1., time) * step(distance(uvc, vec2(0.)), 1.) ;
+    //gl_FragColor *= smoothstep(0., 1., time) * step(distance(uvc, vec2(0.)), 1.) ;
     gl_FragColor.a = 1.;
 }
