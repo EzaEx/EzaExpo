@@ -70,31 +70,43 @@ vec2 fisheye_distort(vec2 uv) {
 uniform float time;
 uniform vec2 dims;
 
+uniform vec3 altitude_col;
+uniform vec3 terrain_col;
+uniform vec3 arctic_col;
+uniform vec3 marine_col;
+uniform vec3 cloud_col;
+
+
 
 float altitude_scale = 4.;
 vec2 altitude_offset = vec2(-10.);
-vec3 altitude_col = vec3(0, .5, 0);
+//vec3 altitude_col = vec3(0, .5, 0);
 
 float terrain_scale = 3.;
 vec2 terrain_offset = vec2(5.);
-vec3 terrain_col = vec3(.5, 0, 0);
+//vec3 terrain_col = vec3(.5, 0, 0);
 
 vec2 polar_offset = vec2(0., 10.);
 
 float sea_level = .5;
 
-vec3 marine_col = vec3(.2, .1, .6);
-vec3 artic_col = vec3(.7, .7, .7);
-vec3 cloud_col = vec3(.8, .8, .8);
+//vec3 marine_col = vec3(.2, .1, .6);
+//vec3 arctic_col = vec3(.7, .7, .7);
+//vec3 cloud_col = vec3(.8, .8, .8);
+
 
 vec2 cloud_offset1 = vec2(50.);
 vec2 cloud_offset2 = vec2(55.);
+
+float cloud_scale = 10.;
 
 float cloud_layer_diff = -0.6;
 
 float roll_angle = .4;
 
 float time_scale = 0.07;
+
+//---------------------------------------------------------//
 
 void main()
 {
@@ -154,7 +166,7 @@ void main()
     float polar = pow(altitude, .5); 
     
     //add icecaps
-    col = is_polar * artic_col * polar + 
+    col = is_polar * arctic_col * polar + 
             (1. - is_polar) * col;
 
     //-----------------------------------------------------//
@@ -162,15 +174,15 @@ void main()
     //generate cloud maps
     vec2 cloud_uv1 = uv + cloud_offset1 + vec2(rate, 0);
     vec2 cloud_uv2 = uv + cloud_offset2 + vec2(rate * cloud_layer_diff, 0);
-    cloud_uv1 *= 10.;
+    cloud_uv1 *= cloud_scale;
     cloud_uv1.x /= 3.;
-    cloud_uv2 *= 10.;
+    cloud_uv2 *= cloud_scale;
     cloud_uv2.x /= 2.;
-    float cloud = fbm(cloud_uv1);
+    float cloud1 = fbm(cloud_uv1);
     float cloud2 = fbm(cloud_uv2);
 
     //combine cloud maps
-    vec3 c_col = cloud * cloud2 * cloud_col;
+    vec3 c_col = cloud1 * cloud2 * cloud_col;
 
     //add clouds
     col = mix(col, c_col, .5);
@@ -178,11 +190,11 @@ void main()
 
     //-----------------------------------------------------//
 
-    //cut out earth circle
+    //cut out planet circle
     float is_circle = smoothstep(1., .995, length(uvc));
     col *= is_circle;
 
-    //light earth
+    //light planet
     col *= smoothstep(.8, .1, uvtc.x);
 
     gl_FragColor = vec4(col, 1.);

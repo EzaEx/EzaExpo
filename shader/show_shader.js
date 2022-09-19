@@ -32,10 +32,16 @@ function onLoaded(loader,res) {
     //Get shader code as a string
     var shaderCode = res.shader.data;
     //Create our Pixi filter using our custom shader code
-    var filter = new PIXI.Filter(null, shaderCode, {
-    time: 0.0,
-    dims: new PIXI.Point(logicWidth, logicHeight),
-    });
+    var filter = new PIXI.Filter(null, shaderCode);
+
+    filter.uniforms.time = 0.0;
+    filter.uniforms.dims = [logicWidth, logicHeight];
+
+    filter.uniforms.altitude_col = [0, .5, 0];
+    filter.uniforms.terrain_col = [.45, 0, 0];
+    filter.uniforms.arctic_col = [.6, .6, .6];
+    filter.uniforms.marine_col = [0, 0, .5];
+    filter.uniforms.cloud_col = [.8, .8, .8];
 
 
     app.ticker.add((delta) => {
