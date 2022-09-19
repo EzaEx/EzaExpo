@@ -1,2 +1,2 @@
-# the_eza_expo
+# The Eza Expo
  
