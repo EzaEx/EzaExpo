@@ -37,10 +37,10 @@ function onLoaded(loader,res) {
     filter.uniforms.time = 0.0;
     filter.uniforms.dims = [logicWidth, logicHeight];
 
-    filter.uniforms.altitude_col = [0, .5, 0];
+    filter.uniforms.altitude_col = [0, .6, 0];
     filter.uniforms.terrain_col = [.45, 0, 0];
     filter.uniforms.arctic_col = [.6, .6, .6];
-    filter.uniforms.marine_col = [0, 0, .5];
+    filter.uniforms.marine_col = [0., .1, .5];
     filter.uniforms.cloud_col = [.8, .8, .8];
 
 
