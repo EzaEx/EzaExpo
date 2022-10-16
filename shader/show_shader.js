@@ -37,15 +37,36 @@ function onLoaded(loader,res) {
     filter.uniforms.time = 0.0;
     filter.uniforms.dims = [logicWidth, logicHeight];
 
+    filter.uniforms.altitude_col = [.7, .2, .7];
+    filter.uniforms.terrain_col = [.4, .4, 0];
+    filter.uniforms.arctic_col = [.2, .2, .9];
+    filter.uniforms.marine_col = [0, .4, .4];
+    filter.uniforms.cloud_col = [1., .8, .8];
+
+    filter.uniforms.planet_scale = .5;
+    filter.uniforms.altitude_scale = 8.;
+    filter.uniforms.terrain_scale = 15.;
+    filter.uniforms.sea_level = .5;
+    filter.uniforms.polar_boundary = 1.75;
+    /*
+
+
     filter.uniforms.altitude_col = [0, .6, 0];
     filter.uniforms.terrain_col = [.45, 0, 0];
     filter.uniforms.arctic_col = [.6, .6, .6];
     filter.uniforms.marine_col = [0., .1, .5];
     filter.uniforms.cloud_col = [.8, .8, .8];
 
+    filter.uniforms.planet_scale = .7;
+    filter.uniforms.altitude_scale = 4.;
+    filter.uniforms.terrain_scale = 4.;
+    filter.uniforms.sea_level = .5;
+    filter.uniforms.polar_boundary = 1.75;
+
+*/
 
     app.ticker.add((delta) => {
-        filter.uniforms.time += 0.02 * delta;
+        filter.uniforms.time += delta;
     });
 
     var blurer = new PIXI.filters.BlurFilter();

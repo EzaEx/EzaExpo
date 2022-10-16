@@ -76,23 +76,24 @@ uniform vec3 arctic_col;
 uniform vec3 marine_col;
 uniform vec3 cloud_col;
 
+uniform float planet_scale;
 
+uniform float polar_boundary;
 
-float altitude_scale = 4.;
+uniform float altitude_scale;
 vec2 altitude_offset = vec2(-10.);
-//vec3 altitude_col = vec3(0, .5, 0);
 
-float terrain_scale = 3.;
+
+uniform float terrain_scale;
 vec2 terrain_offset = vec2(5.);
-//vec3 terrain_col = vec3(.5, 0, 0);
+
 
 vec2 polar_offset = vec2(0., 10.);
 
-float sea_level = .5;
 
-//vec3 marine_col = vec3(.2, .1, .6);
-//vec3 arctic_col = vec3(.7, .7, .7);
-//vec3 cloud_col = vec3(.8, .8, .8);
+uniform float sea_level;
+
+
 
 
 vec2 cloud_offset1 = vec2(50.);
@@ -100,11 +101,13 @@ vec2 cloud_offset2 = vec2(55.);
 
 float cloud_scale = 10.;
 
-float cloud_layer_diff = -0.6;
+float cloud_layer_diff = -.7;
 
 float roll_angle = .4;
+float s=sin(roll_angle), c=cos(roll_angle);
+mat2 roll_mat = mat2( c, -s, s, c );
 
-float time_scale = 0.07;
+float time_scale = 0.07 * 0.02;
 
 //---------------------------------------------------------//
 
@@ -117,12 +120,10 @@ void main()
     
     
     //rotate uv by angle
-    float s=sin(roll_angle), c=cos(roll_angle);
-    mat2 mat = mat2( c, -s, s, c );
-    uv *= mat;
+    uv *= roll_mat;
 
     //scale uv
-    uv *= 1.2;
+    uv *= 1.05 * (1. / planet_scale);
 
     //hold pre-distorted uv
     vec2 uvc = uv + vec2(0);
@@ -138,12 +139,14 @@ void main()
     //calc uvs to generate terrain maps
     vec2 altitude_uv = (uv + altitude_offset) * altitude_scale;
     vec2 terrain_uv = (uv + terrain_offset) * terrain_scale;
+    vec2 polar_uv = (uv + polar_offset) * altitude_scale;
     
     //-----------------------------------------------------//
     
     //land values
     float altitude = fbm(altitude_uv);
     float terrain = fbm(terrain_uv);
+    float polar_terrain = fbm(polar_uv);
 
     vec3 land_col = altitude * altitude_col;
     land_col += terrain * terrain_col;
@@ -152,9 +155,9 @@ void main()
 
    
     //change sea level based on altitude
-    sea_level += pow(uv.y, 2.) / 4.;
+    float sea_level_adjusted = sea_level + pow(uv.y, 2.) / 4.;
 
-    float is_land = step(sea_level, altitude);
+    float is_land = step(sea_level_adjusted, altitude);
     
     vec3 col = land_col * is_land +
                 sea_col * (1. - is_land);
@@ -162,7 +165,7 @@ void main()
     //-----------------------------------------------------//
 
     //generate icecaps
-    float is_polar = step(1. - pow(abs(uv.y), 2.), terrain);
+    float is_polar = step(1. - pow(abs(uv.y), polar_boundary), polar_terrain);
     float polar = pow(altitude, .5); 
     
     //add icecaps
