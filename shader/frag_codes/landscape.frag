@@ -75,7 +75,7 @@ void main()
 
     vec2 uv = (gl_FragCoord.xy * 2.0 - dims.xy) / dims.xy;
 
-    uv.x += time / 3.;
+    uv.x += time * 0.01;
 
     vec2 altitude_uv = (uv + altitude_offset) * altitude_scale;
     vec2 terrain_uv = (uv + terrain_offset) * terrain_scale;

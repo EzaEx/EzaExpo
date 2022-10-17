@@ -1,4 +1,4 @@
-#define TIME_SCALE 1.
+#define TIME_SCALE .02
 
 precision highp float;
 
