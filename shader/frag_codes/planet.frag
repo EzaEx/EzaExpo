@@ -200,5 +200,7 @@ void main()
     //light planet
     col *= smoothstep(.8, .1, uvtc.x);
 
+    col *= smoothstep(0., 1., time*time_scale * 5.);
+
     gl_FragColor = vec4(col, 1.);
 }
