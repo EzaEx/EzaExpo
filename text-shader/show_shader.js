@@ -1,3 +1,9 @@
+/*AUTHOR Tom Lewis
+tomlewisint@gmail.com
+2022*/
+
+
+
 const logicWidth = 1000;
 const logicHeight = 1000;
 

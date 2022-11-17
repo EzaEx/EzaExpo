@@ -1,3 +1,9 @@
+/*AUTHOR Tom Lewis
+tomlewisint@gmail.com
+2022*/
+
+
+
 // For multiple octaves
 #define NOISE fbm
 #define NUM_NOISE_OCTAVES 7

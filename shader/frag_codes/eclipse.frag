@@ -1,3 +1,9 @@
+/*AUTHOR Tom Lewis
+tomlewisint@gmail.com
+2022*/
+
+
+
 #define TIME_SCALE .02
 
 precision highp float;

@@ -1,3 +1,9 @@
+/*AUTHOR Tom Lewis
+tomlewisint@gmail.com
+2022*/
+
+
+
 precision highp float;
 
 // For multiple octaves

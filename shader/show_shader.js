@@ -1,3 +1,7 @@
+/*AUTHOR Tom Lewis
+tomlewisint@gmail.com
+2022*/
+
 var logicWidth = 800;
 var logicHeight = 800;
 

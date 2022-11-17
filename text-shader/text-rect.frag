@@ -1,7 +1,12 @@
+/*AUTHOR Tom Lewis
+tomlewisint@gmail.com
+2022*/
+
+
+
 precision highp float;
 
 uniform sampler2D uSampler;
-
 
 uniform float time;
 uniform vec2 dims;
