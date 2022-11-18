@@ -11,8 +11,8 @@ const urlParams = new URLSearchParams(queryString);
 const file_name = 'frag_codes/' + urlParams.get('name') + '.frag';
 
 if (urlParams.get('pixelate')) {
-    logicWidth = 120;
-    logicHeight = 120;
+    logicWidth = 100;
+    logicHeight = 100;
 }
 
 
