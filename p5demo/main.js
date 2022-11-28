@@ -24,7 +24,7 @@ function setup() {
     for (let i = 0; i < height; i += pixelRes) {
       for (let j = 0; j < width; j += pixelRes) {
         
-        noiseDetail(4, 0.3);
+        noiseDetail(4, 0.4);
 
         n = noise(i * noiseRes, j * noiseRes * scaling, time * noiseRes);
         if(n < 0.4) {
