@@ -1,0 +1,8 @@
+
+.p5Canvas {
+    background-color: rgb(255, 150, 0);
+    max-width: 80vmin;
+    min-width: 80vmin;
+    max-height: 80vmin;
+    min-height: 80vmin;
+}
