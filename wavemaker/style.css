@@ -1,0 +1,13 @@
+
+.p5Canvas {
+    max-width: 90vmin;
+    min-width: 90vmin;
+    max-height: 90vmin;
+    min-height: 90vmin;
+    image-rendering: auto;
+
+    padding: 0;
+    margin: auto;
+    display: block;
+
+}
