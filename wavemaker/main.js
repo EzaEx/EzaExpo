@@ -22,9 +22,9 @@ const COLOR_PAIRS = [
 function setup() {
 
   const LINE_WEIGHT = random(0.9, 1.4);
-  const MAX_FREQUENCY = random(2, 20);
+  const MAX_FREQUENCY = pow(random(1,4.5), 2);
   const COMPONENTS = random(1, 9);
-  const Y_VARIANCE = random(0, 15);
+  const Y_VARIANCE = pow(random(0, 5), 2);
   const LINE_DENSITY = random(5, 30);
   const LINE_OPACITY = 0.6 / LINE_DENSITY;
 
