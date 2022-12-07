@@ -1,3 +1,6 @@
+body {
+	background-color: black;
+}
 
 .p5Canvas {
     max-width: 90vmin;
