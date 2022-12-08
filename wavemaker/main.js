@@ -7,8 +7,18 @@ const MULTIPLIER = RES / 2000;
 
 const LINE_RES = 2000;
 
+const DRAW_PER_FRAME = 10;
 
-let COMPONENT_VALUES = [];
+var LINE_WEIGHT
+var MAX_FREQUENCY
+var COMPONENTS
+var Y_VARIANCE
+var LINE_DENSITY 
+var LINE_OPACITY
+
+var g_to_process = [];
+
+var COMPONENT_VALUES = [];
 
 const COLOR_PAIRS = [
   ["#000000", "#ffffff"],
@@ -21,18 +31,18 @@ const COLOR_PAIRS = [
 
 function setup() {
 
-  const LINE_WEIGHT = random(0.9, 1.4);
-  const MAX_FREQUENCY = pow(random(1,4.5), 2);
-  const COMPONENTS = random(1, 9);
-  const Y_VARIANCE = pow(random(0, 5), 2);
-  const LINE_DENSITY = random(5, 30);
-  const LINE_OPACITY = 0.6 / LINE_DENSITY;
+  LINE_WEIGHT = random(0.9, 1.4);
+  MAX_FREQUENCY = pow(random(1,4.5), 2);
+  COMPONENTS = random(1, 9);
+  Y_VARIANCE = pow(random(1, 5), 2);
+  LINE_DENSITY = pow(random(2,5), 2);
+  LINE_OPACITY = 0.4 / LINE_DENSITY;
 
   for (let i = 0; i < COMPONENTS; i++) {
     COMPONENT_VALUES.push([])
     COMPONENT_VALUES[i].push(random(-1000, 1000))
     COMPONENT_VALUES[i].push(random(0.1, MAX_FREQUENCY))
-    COMPONENT_VALUES[i].push(random(0.2, 0.5))
+    COMPONENT_VALUES[i].push(random(0.2, 0.5 / sqrt(MAX_FREQUENCY / 2)))
   
   }
   
@@ -44,7 +54,6 @@ function setup() {
 
   let colors = COLOR_PAIRS[Math.floor(random(0, 1)*COLOR_PAIRS.length)]
 
-  console.log(colors)
 
   background(colors[0]);
   
@@ -53,24 +62,43 @@ function setup() {
   stroke(strokeCol);
 
   for(let x = -1; x < 1; x += 2 / LINE_RES) {
-    sx = x;
-    let y = 0;
-
-    for(let i = 0; i < COMPONENTS; i++) {
-      y += sin((x + COMPONENT_VALUES[i][0]) * COMPONENT_VALUES[i][1]) * COMPONENT_VALUES[i][2]
-    }
-   
-    let realX = (x + 1) * RES / 2;  
-    let realY = (y + 1) * RES / 2  + MULTIPLIER * random(-Y_VARIANCE, Y_VARIANCE);
-
-    for(let i = 0; i < LINE_DENSITY; i++) lineThroughPoint(realX, realY, LINE_OPACITY);
-    //fill(1)
-    //stroke(1)
-    //square(realX, realY, 10);
-    
+    g_to_process.push(x)
   }
-
 }
+
+
+function draw() {
+  
+  //if (g_to_process.length > 0) {
+    for(let i = 0; i < DRAW_PER_FRAME; i++) {
+      //if (g_to_process.length == 0) break;
+      x = g_to_process.pop();
+      
+      sx = x;
+      let y = 0;
+
+      for(let i = 0; i < COMPONENTS; i++) {
+        if(i % 2 == 0) {
+          y += sin((x + COMPONENT_VALUES[i][0]) * COMPONENT_VALUES[i][1]) * COMPONENT_VALUES[i][2]
+        }
+        else{
+          y += cos((x + COMPONENT_VALUES[i][0]) * COMPONENT_VALUES[i][1]) * COMPONENT_VALUES[i][2]
+        }
+      }
+      
+      let realX = (x + 1) * RES / 2;  
+      let realY = (y + 1) * RES / 2  + MULTIPLIER * random(-Y_VARIANCE, Y_VARIANCE);
+
+      for(let i = 0; i < LINE_DENSITY; i++) lineThroughPoint(realX, realY, LINE_OPACITY);
+      //fill(1)
+      //stroke(1)
+      //square(realX, realY, 10);
+    }
+  }
+    
+
+//}
+
 
 function lineThroughPoint(x, y) {
     let angle = random(0, 2*PI);
