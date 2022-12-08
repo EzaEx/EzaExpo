@@ -25,7 +25,7 @@ const COLOR_PAIRS = [
   ["#000000", "#dd9900"],
   ["#ffffff", "#000000"],
   ["#ffffff", "#550000"],
-  ["#00c", "#ff00ff"],
+  ["#009", "#ff00ff"],
   ["#000000", "#ffaaaa"],]
 
 
@@ -69,10 +69,13 @@ function setup() {
 
 function draw() {
   
-  //if (g_to_process.length > 0) {
+  if (g_to_process.length > 0) {
     for(let i = 0; i < DRAW_PER_FRAME; i++) {
-      //if (g_to_process.length == 0) break;
-      x = g_to_process.pop();
+      if (g_to_process.length == 0) break;
+      let index = Math.floor(random(0, 1)*g_to_process.length)
+
+      x = g_to_process[index];
+      g_to_process.splice(index, 1)
       
       sx = x;
       let y = 0;
@@ -95,6 +98,10 @@ function draw() {
       //square(realX, realY, 10);
     }
   }
+  else {
+    document.getElementById("load").innerText = "Finished";
+  }
+}
     
 
 //}
