@@ -1,0 +1,8 @@
+
+.p5Canvas {
+    /*max-width: 80vmin;
+    min-width: 80vmin;
+    max-height: 80vmin;
+    min-height: 80vmin;*/
+    image-rendering: auto;
+}
