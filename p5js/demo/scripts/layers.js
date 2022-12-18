@@ -13,18 +13,19 @@ class LayeredObject {
         this.layerVec.y *= spacing;
     }
 
-    render(pos, angle = 0) {
+    render(pos, angle = 0, twist = 0) {
 
         push();
         translate(pos.x, pos.y)
 
-        this.layers.forEach((layer, i) => {
+        for (let i = 0; i < this.layers.length; i++) {
             push();
             translate(this.layerVec.x * i, this.layerVec.y * i)
+            //scale(1, 0.1)
             rotate(angle);
-            layer();
+            this.layers[i]();
             pop();
-        })
+        }
         
         pop();
     }
@@ -50,18 +51,24 @@ function setup() {
 
     createCanvas(800,800);
     
-    let layers = []
-    for(let i = 30; i > -30; i--) {
-        layer = function() {polygon(0, 0, (30 - abs(i))*3, 6)}
+    let layers = [];
+    let points = [];
+
+    for(let i = 0; i < 3; i++) {
+        points.push({x:random(-300, 300), y:random(-300, 300)})
+    }
+
+
+    for(let i = 20; i > 0; i--) {
+        layer = function() { points.forEach((point) => {
+            rotate(point.x + point.y)
+            square(point.x, point.y, sin(i / 5) * 100)
+            rotate(-point.x -point.y)
+        })}
         layers.push(layer)
     }
 
-    obj = new LayeredObject(layers, 7);
-
-    fill("#0f0")
-    stroke('#000');
-    strokeWeight(1);
-
+    obj = new LayeredObject(layers, 21);
     
 }
 
@@ -70,10 +77,24 @@ let iTime = 0;
 
 function draw() {
 
-
-    background("white");
+    background(200, 200, 150);
     
-    obj.render({x: 400, y: 700}, iTime);
+    fill(50, 50, 50, 0)
+    stroke(0);
+    strokeWeight(2);
+
+    push();
+    translate(400, 600)
+    rotate(iTime);
+    line(0, -1000, 0, 1000)
+    line(-1000, 0, 1000, 0)
+
+    pop();
+
+    fill(50, 50, 50)
+    stroke(0);
+    strokeWeight(2);
+    obj.render({x: 400, y: 600}, iTime, iTime);
 
     iTime += 0.01;
 
