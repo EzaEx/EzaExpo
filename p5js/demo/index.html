@@ -21,7 +21,8 @@
         <script>
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
-            document.getElementById("canvasScript").src = urlParams.get("name") + ".js";
+            document.getElementById("canvasScript").src = "scripts/" + urlParams.get("name") + ".js";
         </script>
+
     </body>
 </html>

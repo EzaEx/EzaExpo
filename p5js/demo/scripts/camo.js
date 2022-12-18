@@ -4,7 +4,7 @@ tomlewisint@gmail.com
 
 var time = 0;
 var noiseRes = 0.01;
-var pixelRes = 10;
+var pixelRes = 12;
 
 var o1 = 10000;
 var o2 = -10000;
@@ -18,8 +18,7 @@ function setup() {
   }
 
   function draw() {
-    clear();
-    //background(255, 150, 0);
+    background(250, 190, 0);
     noStroke();
     for (let i = 0; i < height; i += pixelRes) {
       for (let j = 0; j < width; j += pixelRes) {
