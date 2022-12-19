@@ -52,23 +52,21 @@ function setup() {
     createCanvas(800,800);
     
     let layers = [];
-    let points = [];
-
-    for(let i = 0; i < 3; i++) {
-        points.push({x:random(-300, 300), y:random(-300, 300)})
-    }
+    let points = [{x: 0, y:20},{x: 120, y:-190}, {x: -90, y:-190}];
 
 
-    for(let i = 20; i > 0; i--) {
-        layer = function() { points.forEach((point) => {
-            rotate(point.x + point.y)
-            square(point.x, point.y, sin(i / 5) * 100)
-            rotate(-point.x -point.y)
+    for(let i = 60; i > 0; i--) {
+        layer = function() { points.forEach((point, j) => {
+            if(i % (j + 1) == 0) {
+                rotate(point.x + point.y)
+                square(point.x, point.y, sin(i / 15) * 100)
+                rotate(-point.x -point.y)
+            }
         })}
         layers.push(layer)
     }
 
-    obj = new LayeredObject(layers, 21);
+    obj = new LayeredObject(layers, 7);
     
 }
 
