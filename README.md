@@ -1,2 +1,2 @@
-# The Eza Expo
+# EzaExpo
  
