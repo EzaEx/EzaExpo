@@ -1,76 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Expo</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+    <script src="./components.js" type="text/javascript" defer></script>
+    
+  </head>
+  
+  <body>
+    <c-header></c-header>
 
-        <link rel='icon' type='image/x-icon' href='/favicon.ico' />
+    <main>
+      <!-- Your page's content -->
+    </main>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono">
-
-        <link rel="stylesheet" href="style.css">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    </head>
-    <body>
-
-        <h1 id = "main_heading" >Expo</h1>
-
-        <p><i>Shaders made by me.</i></p>
-
-        <div id = "navbar">
-        <hr>
-
-        <ul>
-            <li class = "active"><a href="index.html">Home</a></li>
-            <!--
-            <li><a href="upcoming.html">Upcoming</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="about.html">About</a></li>
-            -->
-        </ul>
-
-        <hr>
-        </div>
-
-        <h2>Text Shaders</h2>
-        <ul>
-            <li><a href = "/text-shader">less segments</a></li>
-            <li><a href = "/text-shader?more=true">more segments</a></li>
-        </ul>
-
-        <br>
-
-        <h2>Shader Planet Demos</h2>
-        <p><i>Could be cool for a generative worlds project, lots of parameters. Takes a sec to load.</i></p>
-
-        <ul>
-            <li><a href = "/shader?name=planet">earth</a> <a href = "/shader?name=planet&pixelate=true">(pixelated)</a></li>
-            <li><a href = "/shader?name=planet&weird=true">weird planet</a> <a href = "/shader?name=planet&weird=true&pixelate=true">(pixelated)</a></li>
-            <li><a href = "/shader?name=planet&new=true">cold planet</a> <a href = "/shader?name=planet&new=true&pixelate=true">(pixelated)</a></li>
-            <li><a href = "/shader?name=landscape">landscape</a></li>
-        </ul>
-
-        <br>
-
-        <h2>Other Shaders</h2>
-
-        <ul>
-            <li><a href = "/shader?name=eclipse">eclipse</a> <a href = "/shader?name=eclipse&pixelate=true">(pixelated)</a></li>
-            <li><a href = "/shader?name=lava">lava</a></li>
-            <li><a href = "/shader?name=spotlight">spotlight</a> <a href = "/shader?name=spotlight&pixelate=true">(pixelated)</a></li>
-        </ul>
-
-        <div id = "show_place"></span>
-
-        <br><br><br><br>
-    </body>
-</html>
-
-<script>
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const thing = urlParams.get('a');
-    document.getElementById("show_place").innerHTML = thing;
-</script>
+  </body>
+<html>
