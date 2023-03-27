@@ -1,7 +1,10 @@
+//use vscode extention 'es6-string-html' to view string formatting
+
+
 class Header extends HTMLElement {
   constructor() {
     super();
-    this.innerHTML = `
+    this.innerHTML = /*html*/`
         <nav>
             <ul>
                 <li><a href="./">About</a></li>
@@ -10,15 +13,6 @@ class Header extends HTMLElement {
             </ul>
         </nav>
   `;
-
-    let links = this.children[0].children[0].children;
-    
-    for (let i = 0; i < links.length; i++) {
-        let linkPage = links[i].href.split(".");
-        linkPage = linkPage[linkPage.length - 1];
-        if ()
-    }
-
   }
 }
 
