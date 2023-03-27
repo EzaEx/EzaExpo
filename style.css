@@ -2,24 +2,32 @@ body {
     font-family: monospace;
     background-color: black;
     color: white;
-    height: 3000px;
+    
+}
+
+a {
+    color: white;
 }
 
 
+c-header * {
+    margin: 0;
+    padding: 0;
+}
 c-header ul {
     font-size: 2em;
     position: sticky;
 }
-
 c-header li {
     display: inline;
     padding-right: 1em;
 }
-
 c-header a {
-    color: white;
+    text-decoration: unset;
 }
-
+c-header a:hover {
+    text-decoration-line: underline;
+}
 c-header a.active {
-    background-color: green;
+    color: #00ff00;
 }
