@@ -1,22 +1,42 @@
+html {
+    font-size: 100%;
+}
+
 body {
     font-family: monospace;
-    background-color: black;
-    color: white;
-    
+    background-color: rgb(39, 39, 39);
+    color: rgb(255, 255, 255);
+    font-size: 1em;
 }
 
 a {
-    color: white;
+    color: inherit;
 }
 
+hr {
+    border: 1px solid;
+    color: inherit;
+    height: 0;
+}
 
+h1 {
+    font-size: 3em;
+}
+
+c-header {
+    font-size: 1.2em;
+}
 c-header * {
     margin: 0;
     padding: 0;
 }
-c-header ul {
-    font-size: 2em;
-    position: sticky;
+c-header h1 {
+    letter-spacing: 0;
+    transition: letter-spacing 0.5s;
+}
+c-header h1:hover {
+    letter-spacing: 0.5em;
+    transition: letter-spacing 1s;
 }
 c-header li {
     display: inline;
