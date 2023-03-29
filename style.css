@@ -1,53 +1,8 @@
-html {
-    font-size: 100%;
-}
+#mainCanvas {
+    height: 30vmin;
+    width: 30vmin;
+    border: solid var(--col1) 1px;
+    margin-right: 1em;
 
-body {
-    font-family: monospace;
-    background-color: rgb(39, 39, 39);
-    color: rgb(255, 255, 255);
-    font-size: 1em;
-}
-
-a {
-    color: inherit;
-}
-
-hr {
-    border: 1px solid;
-    color: inherit;
-    height: 0;
-}
-
-h1 {
-    font-size: 3em;
-}
-
-c-header {
-    font-size: 1.2em;
-}
-c-header * {
-    margin: 0;
-    padding: 0;
-}
-c-header h1 {
-    letter-spacing: 0;
-    transition: letter-spacing 0.5s;
-}
-c-header h1:hover {
-    letter-spacing: 0.5em;
-    transition: letter-spacing 1s;
-}
-c-header li {
-    display: inline;
-    padding-right: 1em;
-}
-c-header a {
-    text-decoration: unset;
-}
-c-header a:hover {
-    text-decoration-line: underline;
-}
-c-header a.active {
-    color: #00ff00;
+    image-rendering: pixelated;
 }

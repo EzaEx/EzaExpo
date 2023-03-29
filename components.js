@@ -8,16 +8,18 @@ class Header extends HTMLElement {
         let activeHref = this.getAttribute("active");
         
         this.innerHTML = /*html*/`
-            <h1>Ezaex</h1>
-            <nav>
-                <hr>
-                <ul>
-                    <li><a href = "/"      class = ${activeHref == "/" ? "active" : ""}     >Home</a> </li>
-                    <li><a href = "/about" class = ${activeHref == "/about" ? "active" : ""}>About</a></li>
-                    <li><a href = "/page3" class = ${activeHref == "/page3" ? "active" : ""}>Page3</a></li>
-                </ul>
-                <hr>
-            </nav>
+            
+            <div class = "flex">
+                <h1>Ezaex</h1>
+                <nav>
+                    <ul>
+                        <li><a href = "/"      class = ${activeHref == "/" ? "active" : ""}     >Home</a></li>
+                        <li><a href = "/about" class = ${activeHref == "/about" ? "active" : ""}>About</a></li>
+                        <li><a href = "/page3" class = ${activeHref == "/page3" ? "active" : ""}>Page3</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
         `;
     }
 }
@@ -30,7 +32,7 @@ class Meta extends HTMLElement {
         this.innerHTML = /*html*/`
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="/style.css" rel="stylesheet" type="text/css" />
+            <link href="/global.css" rel="stylesheet" type="text/css" />
         `;        
     }
 }
