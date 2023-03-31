@@ -6,35 +6,39 @@ ctx.fillStyle = "#ff0000";
 let w = canvas.width; let h = canvas.height;
 
 
-let array2 = []
-let array3 = initRandom2DArray(w, h)
-array2 = array3;
+let gridCpy = []
+let grid = initRandom2DArray(w, h)
+
+
+function mod(n, m) {
+    return ((n % m) + m) % m;
+  }
+
 
 function render() {
 
+    gridCpy = []
+    for(let i = 0; i < grid.length; i++) gridCpy.push([[...grid[i]]])
 
-    console.log(array3)
-
-    for (let y = 0; y < array3.length; y ++) {
-        for (let x = 0; x < array3[0].length; x ++) {
+    for (let y = 0; y < grid.length; y ++) {
+        for (let x = 0; x < grid[0].length; x ++) {
             let n = 0;
             for (let yd = -1; yd <= 1; yd ++) {
                 for (let xd = -1; xd <= 1; xd ++) {
                     if(Math.abs(xd) + Math.abs(yd) != 1) {
                         continue;
                     }
-                    n++;
+                    if (grid[y][x]) gridCpy[mod(y + yd, gridCpy.length)][mod(x + xd, gridCpy[0].length)] = 1;
                 }
             }
-            if (n == 0) array2[y][x] = 0;
-            else if (n < 3) array2[y][x] = 1;
-            else array2[y][x] = 0;
+            
+
         }
     }
-    array3 = array2
+    grid = gridCpy
 
-    arrayCtx(array3, ctx)
-    //setTimeout(render, 2000)
+    arrayCtx(grid, ctx)
+    setTimeout(render, 3000)
 }
 
 render()
@@ -46,7 +50,7 @@ function initRandom2DArray(w, h) {
     for (let y = 0; y < h; y ++) {
         array.push([])
         for (let x = 0; x < w; x ++) {
-            array[y].push(Math.round(Math.random()))
+            array[y].push(0)
         }
     }
     return array;
