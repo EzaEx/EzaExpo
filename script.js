@@ -6,8 +6,14 @@ ctx.fillStyle = "#ff0000";
 let w = canvas.width; let h = canvas.height;
 
 
-let gridCpy = []
 let grid = initRandom2DArray(w, h)
+let gridCpy = []
+
+// grid[5][5] = 1;
+// grid[5][6] = 1;
+// grid[5][7] = 1;
+// grid[4][5] = 1;
+// grid[3][6] = 1;
 
 
 function mod(n, m) {
@@ -18,31 +24,33 @@ function mod(n, m) {
 function render() {
 
     gridCpy = []
-    for(let i = 0; i < grid.length; i++) gridCpy.push([[...grid[i]]])
+    for(let i = 0; i < grid.length; i++) gridCpy.push([...grid[i]])
+
+    console.log(gridCpy)
 
     for (let y = 0; y < grid.length; y ++) {
         for (let x = 0; x < grid[0].length; x ++) {
             let n = 0;
             for (let yd = -1; yd <= 1; yd ++) {
                 for (let xd = -1; xd <= 1; xd ++) {
-                    if(Math.abs(xd) + Math.abs(yd) != 1) {
-                        continue;
-                    }
-                    if (grid[y][x]) gridCpy[mod(y + yd, gridCpy.length)][mod(x + xd, gridCpy[0].length)] = 1;
+                    //if(Math.abs(xd) + Math.abs(yd) != 1) continue;
+                    if (yd == 0 && xd == 0) continue;
+                    if (grid[mod(y + yd, gridCpy.length)][mod(x + xd, gridCpy[0].length)]) n++;
                 }
             }
-            
 
+            if (n <= 1 || n == 4) gridCpy[y][x] = 0;
+            if (n == 3) gridCpy[y][x] = 1;
+            
         }
     }
     grid = gridCpy
 
     arrayCtx(grid, ctx)
-    setTimeout(render, 3000)
+    requestAnimationFrame(render)
 }
 
-render()
-
+render();
 
 
 function initRandom2DArray(w, h) {
@@ -50,7 +58,7 @@ function initRandom2DArray(w, h) {
     for (let y = 0; y < h; y ++) {
         array.push([])
         for (let x = 0; x < w; x ++) {
-            array[y].push(0)
+            array[y].push(Math.round(Math.random() ** 5))
         }
     }
     return array;
