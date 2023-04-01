@@ -13,7 +13,7 @@ body {
     background-color: var(--colbg);
     color: var(--col1);
     font-size: 1em;
-    padding: 2em;
+    padding: 1em;
 }
 a {
     color: inherit;

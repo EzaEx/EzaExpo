@@ -1,6 +1,6 @@
 #mainCanvas {
-    height: 30vmin;
-    width: 30vmin;
+    height: 40vmin;
+    width: 40vmin;
     border: solid var(--col1) 1px;
     margin-right: 1em;
 
