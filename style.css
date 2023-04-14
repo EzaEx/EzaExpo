@@ -1,8 +1,0 @@
-#mainCanvas {
-    height: 40vmin;
-    width: 40vmin;
-    border: solid var(--col1) 1px;
-    margin-right: 1em;
-
-    image-rendering: pixelated;
-}
